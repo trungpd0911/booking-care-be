@@ -90,7 +90,21 @@ let updateUserData = async (data) => {
             reject(error);
         }
     });
-}
+};
+
+let deleteUserById = async (userId) => {
+    return new Promise(async (resolve, reject) => {
+        let user = await db.User.findOne({
+            where: { id: userId },
+        });
+        if (user) {
+            await user.destroy();
+            resolve();
+        } else {
+            reject(`Cannot find user to delete`);
+        }
+    });
+};
 
 
 module.exports = {
@@ -98,4 +112,5 @@ module.exports = {
     getAllUser: getAllUser,
     getUserInfoById: getUserInfoById,
     updateUserData: updateUserData,
+    deleteUserById: deleteUserById,
 }
